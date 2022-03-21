@@ -19,16 +19,13 @@ struct ContentView: View {
     @State private var lTrackButton = "Track"
     @State private var clickLabel   = "Click to track time"
     
-    @State private var showRight    = false
+    @State private var sameTime     = true
     
     
     
     var body: some View {
         NavigationView{
             List {
-                
-                //MARK: - LeftSide
-
                 Section {
                     HStack {
                         Text(clickLabel)
@@ -51,12 +48,29 @@ struct ContentView: View {
                         Stepper("\(pumpAmount) minutes", value: $pumpAmount, in: 5...30, step: 1, onEditingChanged: { _ in
                             
                         })
+                        HStack{
+                            Section{
+                                
+                                Toggle("Match Duration?", isOn: $sameTime)
+                            }
+                        }
                     }
                     
                 }header: {
-                    Text("Left Side")
+                    if !sameTime {
+                        Text("First Side")
+                    }else{
+                        Text("")
+                    }
                 }
                 
+                if !sameTime {
+                    VStack{
+                        Text("Match durations")
+                        
+                    
+                    }
+                }
             }
         }
         .navigationTitle("Pump")
@@ -67,7 +81,7 @@ struct ContentView: View {
     func getTimeFor(_ side: String) {
         let currentTime = Date.now
         if side == "left" {
-           lStartTime = currentTime.formatted(date: .omitted, time: .shortened)
+            lStartTime = currentTime.formatted(date: .omitted, time: .shortened)
             lTrackButton = lStartTime
             clickLabel = "Started at"
         } else {
