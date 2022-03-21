@@ -10,65 +10,72 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var lStartTime   = Date()
-    @State private var rStartTime   = Date()
-    @State private var lfDuration   = Date()
-    @State private var rtDuration   = Date()
+    @State private var lStartTime   = ""
+    @State private var rStartTime   = ""
+    @State private var lfDuration   = 6
+    @State private var rtDuration   = 6
+    @State private var pumpAmount   = 10
+    @State private var rTrackButton = "Track"
+    @State private var lTrackButton = "Track"
+    @State private var clickLabel   = "Click to track time"
     
-    static var defaultTime: Date {
-        var component = DateComponents()
-        component.hour      = 7
-        component.minute    = 0
-        return Calendar.current.date(from: component) ?? Date.now
-    }
-    
+    @State private var showRight    = false
     
     
     
     var body: some View {
         NavigationView{
-        List {
-            Section {
+            List {
                 
-                HStack {
+                //MARK: - LeftSide
+
+                Section {
+                    HStack {
+                        Text(clickLabel)
+                            .padding(.leading)
+                        Spacer()
+                        Button("\(lTrackButton)") {
+                            // Get current time
+                            getTimeFor("left")
+                            print(lStartTime)
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    VStack{
+                        Text("How many minutes?")
+                            .font(.headline)
+                        Spacer()
+                        Stepper("\(pumpAmount) minutes", value: $pumpAmount, in: 5...30, step: 1, onEditingChanged: { _ in
+                            
+                        })
+                    }
+                    
+                }header: {
                     Text("Left Side")
-                    padding()
-                    DatePicker("Select time to wake up", selection: $lStartTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        .padding(.trailing)
-                    
-                }
-                HStack{
-                Text("FINISHED WITH")
-                Spacer()
-                    Text("15 Mins")
-                        .padding(.trailing)
-                }
-            
-            }
-            Section {
-                HStack {
-                    Text("Right Side")
-                    padding()
-                    DatePicker("Select time to wake up", selection: $rStartTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        .padding(.trailing)
-                    
                 }
                 
-                HStack{
-                Text("FINISHED WITH")
-                Spacer()
-                    Text("...")
-                        .padding(.trailing)
-                }
             }
         }
         .navigationTitle("Pump")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    
+    func getTimeFor(_ side: String) {
+        let currentTime = Date.now
+        if side == "left" {
+           lStartTime = currentTime.formatted(date: .omitted, time: .shortened)
+            lTrackButton = lStartTime
+            clickLabel = "Started at"
+        } else {
+            rStartTime = currentTime.formatted(date: .omitted, time: .shortened)
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
