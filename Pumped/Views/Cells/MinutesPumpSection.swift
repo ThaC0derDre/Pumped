@@ -13,6 +13,7 @@ struct MinutesPumpSection: View {
         VStack{
             Text("How many minutes?")
                 .font(.headline)
+            
             Stepper("\(pumpTime) minutes", value: $pumpTime, in: 5...30, step: 1, onEditingChanged: { _ in
                 
             })
