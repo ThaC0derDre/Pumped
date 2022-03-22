@@ -14,6 +14,7 @@ class RealmManager: ObservableObject {
     
     init () {
         openRealm()
+        getTimes()
     }
     
     func openRealm() {
@@ -48,7 +49,7 @@ class RealmManager: ObservableObject {
     
     func getTimes() {
         if let localRealm = localRealm {
-            let allTimes = localRealm.objects(Times.self).sorted(byKeyPath: "date", ascending: true)
+            let allTimes = localRealm.objects(Times.self).sorted(byKeyPath: "date", ascending: false)
             times = []
             allTimes.forEach { time in
                 times.append(time)

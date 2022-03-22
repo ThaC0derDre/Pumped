@@ -26,7 +26,16 @@ struct ContentView: View {
     var body: some View {
         List {
             Section {
-                TrackerSection(trackLabel: clickLabel, trackButton: trackButton, startTime: startTime)
+                HStack {
+                    Text(clickLabel)
+                        .padding(.leading)
+                    Spacer()
+                    
+                    Button("\(trackButton)") {
+                        getTimeFor("left")
+                    }
+                    .padding(.trailing)
+                }
                 VStack{
                     MinutesPumpSection(pumpTime: pumpAmount)
                     HStack{
@@ -74,6 +83,8 @@ struct ContentView: View {
                 .padding(25)
                 .background(Color(hue: 0.328, saturation: 0.796, brightness: 0.408))
                 .cornerRadius(450)
+                
+                
                 Button("Save Here"){
                     if startTime != "" {
                     realmManager.addTime(startTime: startTime, duration: pumpAmount, date: getCurrentDate(), xDuration: sameTime ? nil : xPumpAmount)
@@ -86,9 +97,18 @@ struct ContentView: View {
                 }
                 .foregroundColor(.clear)
                 .padding()
-                
             }
             .padding(.bottom)
+    }
+    
+    
+    func getTimeFor(_ side: String) {
+        let currentTime = Date.now
+        if side == "left" {
+            startTime = currentTime.formatted(date: .omitted, time: .shortened)
+            trackButton = startTime
+            clickLabel = "Started at"
+        }
     }
 }
 
@@ -102,7 +122,6 @@ func getCurrentDate() -> String {
         print(dateString)
         return dateString
     }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

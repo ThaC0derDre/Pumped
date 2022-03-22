@@ -19,7 +19,17 @@ struct TimeView: View {
             List{
                 ForEach(realmManager.times, id: \.id) {
                     time in
-                    // add row
+                    if !time.isInvalidated{
+                        TimeRow(startTime: time.startTime, duration: time.duration, date: time.date, xDuration: time.xDuration ?? nil)
+                        
+                            .swipeActions(edge: .trailing){
+                                Button(role: .destructive) {
+                                    realmManager.deleteTimes(id: time.id)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                    }
                 }
             }
             .onAppear {

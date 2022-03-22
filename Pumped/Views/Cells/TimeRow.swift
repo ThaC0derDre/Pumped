@@ -8,22 +8,31 @@
 import SwiftUI
 
 struct TimeRow: View {
-    @State private var startTime    = ""
-    @State private var duration     = 12
-    @State private var date         = ""
-    @State private var xDuration:Int?    = 13
+    @State var startTime: String
+    @State var duration: Int
+    @State var date: String
+    @State var xDuration:Int?
     
     var body: some View {
         VStack{
             Text(date)
+                .font(.title2.bold())
+                
+                
             HStack{
-                Text(startTime)
-                
-                Text("\(duration)")
-                
-            }
-            if xDuration != nil {
-            Text("Other Time: \(xDuration)")
+                Spacer()
+                Text("Started at \(startTime)")
+                Spacer()
+                Spacer()
+                if xDuration != nil {
+                    VStack(){
+                    Text("First side: \(duration) Mins")
+                        Text("Other side: \(xDuration!) Mins")
+                    }
+                } else {
+                    Text("\(duration) Mins each ")
+                    Spacer()
+                }
             }
         }
     }
@@ -31,6 +40,6 @@ struct TimeRow: View {
 
 struct TimeRow_Previews: PreviewProvider {
     static var previews: some View {
-        TimeRow()
+        TimeRow(startTime: "12:00pm", duration: 15, date: "Monday, 15", xDuration: 17)
     }
 }
