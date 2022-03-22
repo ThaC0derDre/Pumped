@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TrackerSection: View {
-    @State private var trackLabel: String
-    @State private var trackButton: String
-    @State private var startTime: String
+    @State var trackLabel: String
+    @State var trackButton: String
+    @State var startTime: String
     var body: some View {
         List {
             Section {
@@ -21,25 +21,8 @@ struct TrackerSection: View {
                     Button("\(trackButton)") {
                         // Get current time
                         getTimeFor("left")
-                        
                     }
-                    
-                    
-                }
-                
-                VStack{
-                    Text("How many minutes?")
-                        .font(.headline)
-                    Spacer()
-                    Stepper("\(pumpAmount) minutes", value: $pumpAmount, in: 5...30, step: 1, onEditingChanged: { _ in
-                        
-                    })
-                    HStack{
-                        Section{
-                            
-                            Toggle("Match Duration?", isOn: $sameTime)
-                        }
-                    }
+                    .padding(.trailing)
                 }
             }
         }
@@ -57,6 +40,6 @@ struct TrackerSection: View {
 }
 struct TrackerSection_Previews: PreviewProvider {
     static var previews: some View {
-        TrackerSection()
+        TrackerSection(trackLabel: "Click to start time", trackButton: "Get Time", startTime: "12:pm")
     }
 }

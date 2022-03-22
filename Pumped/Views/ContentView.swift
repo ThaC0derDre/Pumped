@@ -34,8 +34,6 @@ struct ContentView: View {
                         Button("\(lTrackButton)") {
                             // Get current time
                             getTimeFor("left")
-                            print(lStartTime)
-                            
                         }
                         
                         
