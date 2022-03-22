@@ -15,6 +15,7 @@
 		31B48A7B27E98B90008DBECC /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B48A7A27E98B90008DBECC /* RealmManager.swift */; };
 		31B48A7D27E992C3008DBECC /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B48A7C27E992C3008DBECC /* Times.swift */; };
 		31B48A8027E9DE78008DBECC /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B48A7F27E9DE78008DBECC /* TimeView.swift */; };
+		31B48A8227EA09AE008DBECC /* TimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B48A8127EA09AE008DBECC /* TimeRow.swift */; };
 		31B9087127E946B400BF40E4 /* MinutesPumpSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B9087027E946B400BF40E4 /* MinutesPumpSection.swift */; };
 		31B9087327E9581700BF40E4 /* PButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B9087227E9581600BF40E4 /* PButton.swift */; };
 		31B9087727E98B2700BF40E4 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 31B9087627E98B2700BF40E4 /* Realm */; };
@@ -31,6 +32,7 @@
 		31B48A7A27E98B90008DBECC /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		31B48A7C27E992C3008DBECC /* Times.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Times.swift; sourceTree = "<group>"; };
 		31B48A7F27E9DE78008DBECC /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		31B48A8127EA09AE008DBECC /* TimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRow.swift; sourceTree = "<group>"; };
 		31B9087027E946B400BF40E4 /* MinutesPumpSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinutesPumpSection.swift; sourceTree = "<group>"; };
 		31B9087227E9581600BF40E4 /* PButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 			children = (
 				318A2EF027E943290080A954 /* TrackerSection.swift */,
 				31B9087027E946B400BF40E4 /* MinutesPumpSection.swift */,
+				31B48A8127EA09AE008DBECC /* TimeRow.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				31B48A7D27E992C3008DBECC /* Times.swift in Sources */,
 				318A2EDF27E912DF0080A954 /* ContentView.swift in Sources */,
 				31B9087327E9581700BF40E4 /* PButton.swift in Sources */,
+				31B48A8227EA09AE008DBECC /* TimeRow.swift in Sources */,
 				31B48A8027E9DE78008DBECC /* TimeView.swift in Sources */,
 				318A2EDD27E912DF0080A954 /* PumpedApp.swift in Sources */,
 				318A2EF127E943290080A954 /* TrackerSection.swift in Sources */,

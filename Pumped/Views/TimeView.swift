@@ -16,6 +16,16 @@ struct TimeView: View {
                 .font(.title3)
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
+            List{
+                ForEach(realmManager.times, id: \.id) {
+                    time in
+                    // add row
+                }
+            }
+            .onAppear {
+                UITableView.appearance().backgroundColor = UIColor.clear
+                UITableViewCell.appearance().backgroundColor = UIColor.clear
+            }
         }
     }
 }
