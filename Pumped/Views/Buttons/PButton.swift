@@ -24,7 +24,6 @@ struct PButton: View {
             .cornerRadius(450)
             Button("Save Here"){
                 saved = true
-                
                 withAnimation {
                     someText = "Saved"
                 }
@@ -37,7 +36,7 @@ struct PButton: View {
     }
     
     
-    struct FirstTest_Previews: PreviewProvider {
+    struct PButton_Previews: PreviewProvider {
         static var previews: some View {
             PButton()
         }

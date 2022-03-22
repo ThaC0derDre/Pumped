@@ -11,8 +11,8 @@ import RealmSwift
 class Times: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var startTime    = ""
-    @Persisted var duration     = ""
+    @Persisted var duration: Int
     @Persisted var date         = ""
-    @Persisted var xDuration: String?
+    @Persisted var xDuration: Int?
     
 }

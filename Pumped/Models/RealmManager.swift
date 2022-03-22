@@ -29,12 +29,12 @@ class RealmManager: ObservableObject {
     }
     
     
-    func addTime(startTime: String, duration: String, date: String, xDuration: String?) {
+    func addTime(startTime: String, duration: Int, date: String, xDuration: Int?) {
         
         if let localRealm = localRealm {
             do{
                 try localRealm.write{
-                    let newTime = Times(value: ["startTime": startTime, "duration": duration, "date": date, "xDuration": xDuration])
+                    let newTime = Times(value: ["startTime": startTime, "duration": duration, "date": date, "xDuration": xDuration ?? nil])
                     localRealm.add(newTime)
                     getTimes()
                 }
@@ -56,13 +56,18 @@ class RealmManager: ObservableObject {
         }
     }
     
-    func updateTimes(id: ObjectId) {
+    func deleteTimes(id: ObjectId) {
         if let localRealm = localRealm {
             do {
-                let timeToUpdate = localRealm.objects(Times.self).filter(NSPredicate(format: "id == %@", id))
-                guard timeToUpdate.isEmpty else { return }
+                let timeToDelete = localRealm.objects(Times.self).filter(NSPredicate(format: "id == %@", id))
+                guard !timeToDelete.isEmpty else { return }
                 
-                //continue realm adventures here...
+                try localRealm.write{
+                    localRealm.delete(timeToDelete)
+                    getTimes()
+                }
+            }catch {
+                print("Error deleting time from Realm: \(error)")
             }
         }
     }
