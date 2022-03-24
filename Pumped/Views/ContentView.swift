@@ -37,12 +37,17 @@ struct ContentView: View {
                     .padding(.trailing)
                 }
                 VStack{
-                    MinutesPumpSection(pumpTime: pumpAmount)
+                    Text("How many minutes?")
+                        .font(.headline)
+                    
+                    Stepper("\(pumpAmount) minutes", value: $pumpAmount, in: 5...30, step: 1, onEditingChanged: { _ in
+                    })
                     HStack{
                         Section{
                             Toggle("Match Duration?", isOn: $sameTime)
                         }
                     }
+                        .padding()
                 }
             }header: {
                 if !sameTime {
@@ -54,13 +59,21 @@ struct ContentView: View {
             
             if !sameTime {
                 Section{
-                    MinutesPumpSection(pumpTime: xPumpAmount)
-                }header: {
+                    VStack{
+                        Text("How many minutes?")
+                            .font(.headline)
+                        
+                        Stepper("\(xPumpAmount) minutes", value: $xPumpAmount, in: 5...30, step: 1, onEditingChanged: { _ in
+                        })
+                            .padding()
+                    }
+                    }header: {
                     Text("OTHER SIDE")
                 }
             }
             
-            
+            //MARK: - SHOW PREVIOUS TIMES
+
             Button("Show Previous Times"){
                 showTimeV = true
             }
@@ -84,7 +97,8 @@ struct ContentView: View {
                 .background(Color(hue: 0.328, saturation: 0.796, brightness: 0.408))
                 .cornerRadius(450)
                 
-                
+                //MARK: - SAVE BUTTON
+
                 Button("Save Here"){
                     if startTime != "" {
                     realmManager.addTime(startTime: startTime, duration: pumpAmount, date: getCurrentDate(), xDuration: sameTime ? nil : xPumpAmount)
@@ -92,7 +106,9 @@ struct ContentView: View {
                     saved = true
                     withAnimation {
                         someText = "Saved"
+                        resetScreen()
                     }
+                            
                 }
                 }
                 .foregroundColor(.clear)
@@ -110,6 +126,21 @@ struct ContentView: View {
             clickLabel = "Started at"
         }
     }
+
+private func resetScreen() {
+    // Delay of 2.5 seconds
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        startTime       = ""
+        pumpAmount      = 10
+        trackButton     = "Track"
+        clickLabel      = "Click to track time"
+        sameTime        = true
+        saved           = false
+        someText        = "Save"
+    }
+}
+
+
 }
 
 
