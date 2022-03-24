@@ -51,7 +51,7 @@ struct ContentView: View {
                 }
             }header: {
                 if !sameTime {
-                    Text("FIRST SIDE")
+                    Text("LEFT SIDE")
                 }else{
                     Text("")
                 }
@@ -68,7 +68,7 @@ struct ContentView: View {
                             .padding()
                     }
                     }header: {
-                    Text("OTHER SIDE")
+                    Text("RIGHT SIDE")
                 }
             }
             
@@ -130,6 +130,7 @@ struct ContentView: View {
 private func resetScreen() {
     // Delay of 2.5 seconds
     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        withAnimation {
         startTime       = ""
         pumpAmount      = 10
         trackButton     = "Track"
@@ -137,6 +138,7 @@ private func resetScreen() {
         sameTime        = true
         saved           = false
         someText        = "Save"
+        }
     }
 }
 
