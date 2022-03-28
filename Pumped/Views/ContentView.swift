@@ -19,7 +19,9 @@ struct ContentView: View {
     @State private var sameTime     = true
     @State private var showTimeV    = false
     
-    @State private var someText = "Save"
+    private var saveText: String {
+        saved ? "Saved" : "Save"
+    }
     @State private var saved    = false
     
     
@@ -47,7 +49,7 @@ struct ContentView: View {
                             Toggle("Match Duration?", isOn: $sameTime)
                         }
                     }
-                        .padding()
+                    .padding()
                 }
             }header: {
                 if !sameTime {
@@ -67,17 +69,20 @@ struct ContentView: View {
                         })
                             .padding()
                     }
-                    }header: {
+                }header: {
                     Text("RIGHT SIDE")
                 }
             }
+                
             
             //MARK: - SHOW PREVIOUS TIMES
-
+            
             Button("Show Previous Times"){
                 showTimeV = true
             }
         }
+        
+        .animation(.default, value: sameTime)
         .navigationTitle("Pump")
         .navigationBarTitleDisplayMode(.inline)
         .preferredColorScheme(.dark)
@@ -86,67 +91,59 @@ struct ContentView: View {
                 .environmentObject(realmManager)
         }
         
-            ZStack{
-                HStack{
-                    Text(someText)
-                        .font(.title2)
-                    Image(systemName: saved ? "checkmark.circle" : "circle")
-                }
-                .foregroundColor(.white)
-                .padding(25)
-                .background(Color(hue: 0.328, saturation: 0.796, brightness: 0.408))
-                .cornerRadius(450)
-                
-                //MARK: - SAVE BUTTON
-
-                Button("Save Here"){
-                    if startTime != "" {
+        ZStack{
+            HStack{
+                Text(saveText)
+                    .font(.title2)
+                Image(systemName: saved ? "checkmark.circle" : "circle")
+            }
+            .foregroundColor(.white)
+            .padding(25)
+            .background(Color(hue: 0.328, saturation: 0.796, brightness: 0.408))
+            .cornerRadius(450)
+            .onTapGesture {
+                if startTime != "" {
                     realmManager.addTime(startTime: startTime, duration: pumpAmount, date: getCurrentDate(), xDuration: sameTime ? nil : xPumpAmount)
-                        
+                    
                     saved = true
                     withAnimation {
-                        someText = "Saved"
                         resetScreen()
                     }
-                            
                 }
-                }
-                .foregroundColor(.clear)
-                .padding()
             }
             .padding(.bottom)
+        }
+    }
+        
+        
+        func getTimeFor(_ side: String) {
+            let currentTime = Date.now
+            if side == "left" {
+                startTime = currentTime.formatted(date: .omitted, time: .shortened)
+                trackButton = startTime
+                clickLabel = "Started at"
+            }
+        }
+        
+        private func resetScreen() {
+            // Delay of 2.5 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                withAnimation {
+                    startTime       = ""
+                    pumpAmount      = 10
+                    trackButton     = "Track"
+                    clickLabel      = "Click to track time"
+                    sameTime        = true
+                    saved           = false
+                }
+            }
+        }
+        
+        
     }
     
     
-    func getTimeFor(_ side: String) {
-        let currentTime = Date.now
-        if side == "left" {
-            startTime = currentTime.formatted(date: .omitted, time: .shortened)
-            trackButton = startTime
-            clickLabel = "Started at"
-        }
-    }
-
-private func resetScreen() {
-    // Delay of 2.5 seconds
-    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-        withAnimation {
-        startTime       = ""
-        pumpAmount      = 10
-        trackButton     = "Track"
-        clickLabel      = "Click to track time"
-        sameTime        = true
-        saved           = false
-        someText        = "Save"
-        }
-    }
-}
-
-
-}
-
-
-func getCurrentDate() -> String {
+    func getCurrentDate() -> String {
         let formatter = DateFormatter()
         
         formatter.dateFormat    = "MMM d, EEEE"
@@ -155,9 +152,9 @@ func getCurrentDate() -> String {
         print(dateString)
         return dateString
     }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
-}
