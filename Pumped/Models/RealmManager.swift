@@ -11,6 +11,9 @@ import RealmSwift
 class RealmManager: ObservableObject {
     private(set) var localRealm: Realm?
     @Published private(set) var times:[Times] = []
+    var dates: [Times]{
+        times.filter { $0.date == ""}
+    }
     
     init () {
         openRealm()
